@@ -97,12 +97,9 @@
 		5F1D110429D3EC9800B743C3 /* Locator */ = {
 			isa = PBXGroup;
 			children = (
-				5F1D110529D3EC9800B743C3 /* AppDelegate.swift */,
-				5F1D110729D3EC9800B743C3 /* SceneDelegate.swift */,
+				5F1D113629D3EC9800B743C3 /* Application */,
+				5F1D113529D3EC9800B743C3 /* SupportingFile */,
 				5F1D110929D3EC9800B743C3 /* ViewController.swift */,
-				5F1D110E29D3EC9800B743C3 /* Assets.xcassets */,
-				5F1D111029D3EC9800B743C3 /* LaunchScreen.storyboard */,
-				5F1D111329D3EC9800B743C3 /* Info.plist */,
 			);
 			path = Locator;
 			sourceTree = "<group>";
@@ -122,6 +119,25 @@
 				5F1D112829D3EC9800B743C3 /* LocatorUITestsLaunchTests.swift */,
 			);
 			path = LocatorUITests;
+			sourceTree = "<group>";
+		};
+		5F1D113529D3EC9800B743C3 /* SupportingFile */ = {
+			isa = PBXGroup;
+			children = (
+				5F1D110E29D3EC9800B743C3 /* Assets.xcassets */,
+				5F1D111029D3EC9800B743C3 /* LaunchScreen.storyboard */,
+				5F1D111329D3EC9800B743C3 /* Info.plist */,
+			);
+			path = SupportingFile;
+			sourceTree = "<group>";
+		};
+		5F1D113629D3EC9800B743C3 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				5F1D110529D3EC9800B743C3 /* AppDelegate.swift */,
+				5F1D110729D3EC9800B743C3 /* SceneDelegate.swift */,
+			);
+			path = Application;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -427,7 +443,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q6CQH2T6SR;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Locator/Info.plist;
+				INFOPLIST_FILE = Locator/SupportingFile/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -458,7 +474,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q6CQH2T6SR;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Locator/Info.plist;
+				INFOPLIST_FILE = Locator/SupportingFile/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
