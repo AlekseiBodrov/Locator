@@ -1,19 +1,17 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  Locator
 //
-//  Created by Алексей Бодров on 24.03.2023.
+//  Created by Алексей Бодров on 25.03.2023.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+final class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
     }
 
-
 }
-
