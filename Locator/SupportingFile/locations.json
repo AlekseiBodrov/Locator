@@ -1,0 +1,38 @@
+[
+    {
+        "id": 0,
+        "name": "Andrey",
+        "latitude": 40.71,
+        "longitude": -74.33
+    },
+    {
+        "id": 1,
+        "name": "Olga",
+        "latitude": 41.38,
+        "longitude": 2.17
+    },
+    {
+        "id": 2,
+        "name": "Viktoria",
+        "latitude": 35.68,
+        "longitude": 139.76
+    },
+    {
+        "id": 3,
+        "name": "Pavel",
+        "latitude": 33.74,
+        "longitude": -84.38
+    },
+    {
+        "id": 4,
+        "name": "Maria",
+        "latitude": 48.85,
+        "longitude": 2.35
+    },
+    {
+        "id": 5,
+        "name": "Sergei",
+        "latitude": 22.31,
+        "longitude": 114.16
+    }
+]

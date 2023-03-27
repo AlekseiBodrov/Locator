@@ -15,6 +15,7 @@ final class MainViewController: UIViewController {
     }
 
     // MARK: - property
+    var viewModel: MainViewModelProtocol?
     var mainView: MainViewProtocol?
 
     // MARK: - life cycle funcs
@@ -33,8 +34,7 @@ final class MainViewController: UIViewController {
         mainView?.tableView.delegate = self
         mainView?.tableView.dataSource = self
         mainView?.tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
-        viewModel?.updateData {
-        }
+        viewModel?.updateData {}
     }
 
 }

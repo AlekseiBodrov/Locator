@@ -12,7 +12,7 @@ final class MainTableViewCell: UITableViewCell {
     static let identifier = "MainTableViewCell"
 
     // MARK: - property
-    let view = UIView()
+    let view = InformationView().instanceFromNib()
 
     // MARK: - awakeFromNib
     override class func awakeFromNib() {
@@ -29,6 +29,12 @@ final class MainTableViewCell: UITableViewCell {
         view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+    }
+
+    func setupWith(_ person: Person) {
+        self.view.icon.image = UIImage(named: "\(person.id)")
+        self.view.mainLabel.text = person.name
+        self.view.discriptionLabel.text = "\(person.longitude)"
     }
 }
 

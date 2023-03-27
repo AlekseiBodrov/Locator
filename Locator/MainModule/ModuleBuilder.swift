@@ -11,9 +11,17 @@ protocol Builder {
     static func createMain() -> MainViewController
 }
 
-class ModuleBuilder: Builder {
+final class ModuleBuilder: Builder {
+
+    // MARK: - static
     static func createMain() -> MainViewController {
+        let networkService = NetworkService()
+        let mainViewModel = MainViewModel(networkService: networkService)
+        let mainView = MainView()
         let viewController = MainViewController()
+        viewController.viewModel = mainViewModel
+        viewController.mainView = mainView
+
         return viewController
     }
 }
