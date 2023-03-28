@@ -13,26 +13,26 @@
     },
     {
         "id": 2,
-        "name": "Viktoria",
-        "latitude": 35.68,
-        "longitude": 139.76
-    },
-    {
-        "id": 3,
         "name": "Pavel",
         "latitude": 33.74,
         "longitude": -84.38
     },
     {
-        "id": 4,
-        "name": "Maria",
-        "latitude": 48.85,
-        "longitude": 2.35
+        "id": 3,
+        "name": "Viktoria",
+        "latitude": 35.68,
+        "longitude": 139.76
     },
     {
-        "id": 5,
+        "id": 4,
         "name": "Sergei",
         "latitude": 22.31,
         "longitude": 114.16
+    },
+    {
+        "id": 5,
+        "name": "Maria",
+        "latitude": 48.85,
+        "longitude": 2.35
     }
 ]

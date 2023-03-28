@@ -10,7 +10,7 @@ import UIKit
 final class MainViewController: UIViewController {
     // MARK: - constant
     enum Constant {
-        static let heightForHeaderInSection: CGFloat = 100
+        static let heightForHeaderInSection: CGFloat = 200
         static let heightForRow: CGFloat = 100
     }
 
@@ -56,6 +56,11 @@ extension MainViewController: UITableViewDelegate {
 
 // MARK: - UITableViewDataSource
 extension MainViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return mainView?.viewForHeaderInSection
+    }
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return Constant.heightForHeaderInSection
     }
@@ -63,6 +68,7 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constant.heightForRow
     }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.viewModel?.numberOfRows() ?? 0
     }
