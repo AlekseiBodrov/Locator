@@ -9,9 +9,9 @@ import UIKit
 
 enum Resources {
     enum Alert {
-        static let title = ""
+        static let title = "Is empty"
         static let message = ""
-        static let cancel = ""
+        static let cancel = "Cancel"
     }
 
     enum Fonts {

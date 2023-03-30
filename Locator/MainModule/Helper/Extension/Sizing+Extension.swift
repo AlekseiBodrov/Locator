@@ -19,10 +19,10 @@ extension CGFloat: Sizing { }
 
 extension Sizing {
 
-    /// minBtn
+    /// Row
     ///
-    /// Value: 44.0.
-    public static var minBtn: Self { Self(44.0) }
+    /// Value: 100.0.
+    public static var rowSize: Self { Self(100.0) }
 
     /// XL
     ///

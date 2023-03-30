@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 final class InformationView: UIView {
 
@@ -21,15 +22,16 @@ final class InformationView: UIView {
     }
 
     // MARK: - public
-    func setupWith(_ person: Person) {
-        self.icon.image = UIImage(named: "\(person.id)")
-        self.mainLabel.text = person.name
-        self.discriptionLabel.text = "\(person.longitude)"
+    func setupWith(image: String?, mainLabel: String?, discriptionLabel: String?) {
+        self.icon.image = image != nil ?  UIImage(named: image!) : UIImage(systemName: "questionmark.circle")
+        self.mainLabel.text =  mainLabel != nil ?  mainLabel : "Empty"
+        self.discriptionLabel.text =  discriptionLabel != nil ?  discriptionLabel : "Empty"
     }
 
-    func configureWith(fontSize: Double) {
-        mainLabel.font = Resources.Fonts.sfProDisplayBold(with: fontSize)
-        discriptionLabel.font = Resources.Fonts.sfProDisplayBold(with: fontSize)
+    func configureWith(mainFontSize: Double, discriptionFontSize: Double, radius: CGFloat = 10) {
+        mainLabel.font = Resources.Fonts.sfProDisplayBold(with: mainFontSize)
+        discriptionLabel.font = Resources.Fonts.sfProDisplayBold(with: discriptionFontSize)
+        icon.rounded(radius: radius)
     }
 }
 

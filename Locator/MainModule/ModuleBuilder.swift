@@ -19,7 +19,7 @@ final class ModuleBuilder: Builder {
         let mainViewModel = MainViewModel(networkService: networkService)
         let mainView = MainView()
         let viewController = MainViewController()
-        viewController.viewModel = mainViewModel
+        viewController.mainViewModel = mainViewModel
         viewController.mainView = mainView
 
         return viewController

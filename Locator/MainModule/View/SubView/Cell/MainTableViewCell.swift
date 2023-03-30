@@ -10,14 +10,15 @@ import UIKit
 final class MainTableViewCell: UITableViewCell {
     // MARK: - constant
     private enum Constant {
-        static let fontSize: CGFloat = .mSize
+        static let mainFontSize: CGFloat = .mSize
+        static let discriptionFontSize: CGFloat = .sSize
     }
 
     // MARK: - static
     static let identifier = "MainTableViewCell"
 
     // MARK: - property
-    let view = InformationView().instanceFromNib()
+    private let view = InformationView().instanceFromNib()
 
     // MARK: - life cycle funcs
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -29,15 +30,14 @@ final class MainTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - flow funcs
     override func layoutSubviews() {
         super.layoutSubviews()
         setConstraint()
     }
 
     // MARK: - public
-    func setupWith(_ person: Person) {
-        self.view.setupWith(person)
+    func setupWith(image: String?, mainLabel: String?, discriptionLabel: String?) {
+        self.view.setupWith(image: image, mainLabel: mainLabel, discriptionLabel: discriptionLabel)
     }
 }
 
@@ -46,7 +46,8 @@ extension MainTableViewCell {
     // MARK: - flow funcs
     private func configureView() {
         self.contentView.addSubview(view)
-        view.configureWith(fontSize: Constant.fontSize)
+        view.configureWith(mainFontSize: Constant.mainFontSize,
+                           discriptionFontSize: Constant.discriptionFontSize)
         view.translatesAutoresizingMaskIntoConstraints = false
     }
 

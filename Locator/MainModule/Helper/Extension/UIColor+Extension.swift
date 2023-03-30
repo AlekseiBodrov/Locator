@@ -9,5 +9,5 @@ import UIKit
 
 enum Color {
     static let mainColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-    static let secondaryColor = UIColor(red: 0.19, green: 0.19, blue: 0.19, alpha: 1.0)
+    static let secondaryColor = UIColor(red: 0.80, green: 0.80, blue: 0.80, alpha: 1)
 }

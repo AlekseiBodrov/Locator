@@ -30,6 +30,9 @@
 		5F498DCB29D3831600A0A0C5 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F498DCA29D3831600A0A0C5 /* Resources.swift */; };
 		5F498DD029D3846100A0A0C5 /* SF-Pro-Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F498DCE29D3846100A0A0C5 /* SF-Pro-Display-Bold.ttf */; };
 		5F498DD129D3846100A0A0C5 /* SF-Pro-Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F498DCF29D3846100A0A0C5 /* SF-Pro-Display-Medium.ttf */; };
+		5F498DD329D545E800A0A0C5 /* Person + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F498DD229D545E800A0A0C5 /* Person + Extension.swift */; };
+		5F498DD529D5460300A0A0C5 /* ServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F498DD429D5460300A0A0C5 /* ServiceMock.swift */; };
+		5F498DD729D546B900A0A0C5 /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F498DD629D546B900A0A0C5 /* MainViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +80,9 @@
 		5F498DCA29D3831600A0A0C5 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		5F498DCE29D3846100A0A0C5 /* SF-Pro-Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Bold.ttf"; sourceTree = "<group>"; };
 		5F498DCF29D3846100A0A0C5 /* SF-Pro-Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Medium.ttf"; sourceTree = "<group>"; };
+		5F498DD229D545E800A0A0C5 /* Person + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person + Extension.swift"; sourceTree = "<group>"; };
+		5F498DD429D5460300A0A0C5 /* ServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceMock.swift; sourceTree = "<group>"; };
+		5F498DD629D546B900A0A0C5 /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,7 +145,10 @@
 		5F1D111B29D3EC9800B743C3 /* LocatorTests */ = {
 			isa = PBXGroup;
 			children = (
+				5F498DD629D546B900A0A0C5 /* MainViewModelTests.swift */,
 				5F1D111C29D3EC9800B743C3 /* LocatorTests.swift */,
+				5F498DD429D5460300A0A0C5 /* ServiceMock.swift */,
+				5F498DD229D545E800A0A0C5 /* Person + Extension.swift */,
 			);
 			path = LocatorTests;
 			sourceTree = "<group>";
@@ -428,7 +437,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F498DD529D5460300A0A0C5 /* ServiceMock.swift in Sources */,
+				5F498DD329D545E800A0A0C5 /* Person + Extension.swift in Sources */,
 				5F1D111D29D3EC9800B743C3 /* LocatorTests.swift in Sources */,
+				5F498DD729D546B900A0A0C5 /* MainViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
