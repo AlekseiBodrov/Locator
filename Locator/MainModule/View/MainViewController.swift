@@ -47,13 +47,15 @@ extension MainViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier) as? MainTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: MainTableViewCell.identifier) as? MainTableViewCell else { return UITableViewCell() }
 
         let person = mainViewModel?.personArray[indexPath.row]
 
         if mainView?.selectedPerson == indexPath.row {
-            self.mainViewModel?.selectedCoordinate = CLLocationCoordinate2D(latitude: (mainView?.array![indexPath.row].latitude)!,
-                                                                            longitude: (mainView?.array![indexPath.row].longitude)!)
+            self.mainViewModel?.selectedCoordinate = CLLocationCoordinate2D(
+                latitude: (mainView?.array![indexPath.row].latitude)!,
+                longitude: (mainView?.array![indexPath.row].longitude)!)
         }
 
         cell.setupWith(image: person?.icon,
@@ -66,9 +68,10 @@ extension MainViewController: UITableViewDelegate {
         if mainView?.selectedPerson != indexPath.row {
             mainView?.selectedPerson = indexPath.row
         } else {
-            self.mainView?.viewForHeaderInSection.setupWith(image: "redPin",
-                                                            mainLabel: "Me",
-                                                            discriptionLabel: self.mainViewModel?.prepareSelfCoordinate())
+            self.mainView?.viewForHeaderInSection.setupWith(
+                image: "redPin",
+                mainLabel: "Me",
+                discriptionLabel: self.mainViewModel?.prepareSelfCoordinate())
             mainView?.selectedPerson = nil
             if let coordinate = mainViewModel?.selfCoordinate {
                 mainViewModel?.selectedCoordinate = coordinate
@@ -93,11 +96,14 @@ extension MainViewController: UITableViewDataSource {
 
             let image = self.mainView?.array?[selectedPerson].icon
 
-            self.mainView?.viewForHeaderInSection.setupWith(image: image!, mainLabel: (person?.name)!, discriptionLabel: "Is Selected")
+            self.mainView?.viewForHeaderInSection.setupWith(image: image!,
+                                                            mainLabel: (person?.name)!,
+                                                            discriptionLabel: "Is Selected")
         } else {
-            self.mainView?.viewForHeaderInSection.setupWith(image: "redPin",
-                                                            mainLabel: "Me",
-                                                            discriptionLabel: self.mainViewModel?.prepareSelfCoordinate())
+            self.mainView?.viewForHeaderInSection.setupWith(
+                image: "redPin",
+                mainLabel: "Me",
+                discriptionLabel: self.mainViewModel?.prepareSelfCoordinate())
         }
         return self.mainView?.viewForHeaderInSection
     }
@@ -176,9 +182,11 @@ extension MainViewController {
 
                     let image = self?.mainView?.array?[selectedPerson].icon
 
-                    self?.mainView?.viewForHeaderInSection.setupWith(image: image!, mainLabel: (person?.name)!, discriptionLabel: "Is Selected")
+                    self?.mainView?.viewForHeaderInSection.setupWith(
+                        image: image!, mainLabel: (person?.name)!, discriptionLabel: "Is Selected")
                 } else {
-                    self?.mainView?.viewForHeaderInSection.setupWith(image: "redPin", mainLabel: "Me", discriptionLabel: result)
+                    self?.mainView?.viewForHeaderInSection.setupWith(
+                        image: "redPin", mainLabel: "Me", discriptionLabel: result)
                 }
             }
         }

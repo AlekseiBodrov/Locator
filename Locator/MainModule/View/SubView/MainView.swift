@@ -26,7 +26,7 @@ final class MainView: UIView, MainViewProtocol {
         }
     }
 
-    var selectedPerson: Int? = nil {
+    var selectedPerson: Int? {
         didSet {
             tableView.reloadData()
         }
@@ -78,8 +78,6 @@ final class MainView: UIView, MainViewProtocol {
         viewForHeaderInSection.isHidden = isHidden
         tableView.reloadData()
     }
-
-    
 }
 
 extension MainView {
@@ -108,7 +106,6 @@ extension MainView {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicator
     }
-    
     private func setConstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: topAnchor),
