@@ -30,7 +30,7 @@ final class NetworkService: NetworkServiceProtocol {
         }
     }
 
-    func updateLocations(complition: @escaping ([Person]) -> Void){
+    func updateLocations(complition: @escaping ([Person]) -> Void) {
         self.lastLocations.forEach({ person in
             person.latitude? += Double.random(in: -0.0001...0.0001)
             person.longitude? += Double.random(in: -0.0001...0.0001)

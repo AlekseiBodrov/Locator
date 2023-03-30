@@ -9,15 +9,15 @@ import Foundation
 import CoreLocation
 
 protocol MainViewModelProtocol {
-    var updateSelfCoordinate: ((String)->())? { get set }
-    var updateViewData: ((ViewData)->())? { get set }
+    var updateSelfCoordinate: ((String) -> Void)? { get set }
+    var updateViewData: ((ViewData) -> Void)? { get set }
     var personArray: [Person] { get }
     var selfCoordinate: CLLocationCoordinate2D { get set }
     var locationManager: CLLocationManager { get }
     var selectedCoordinate: CLLocationCoordinate2D { get set }
     func numberOfRows() -> Int
     func prepareSelfCoordinate() -> String
-    func updateData(completion:() -> Void)
+    func updateData(completion: () -> Void)
     func getDistanceFor(indexPath: IndexPath) -> String
     func startFetch()
     func error()
@@ -32,15 +32,11 @@ final class MainViewModel: MainViewModelProtocol {
 //
 //        }
 //    }
-    var updateSelfCoordinate: ((String) -> ())?
+    var updateSelfCoordinate: ((String) -> Void)?
     var selectedCoordinate = CLLocationCoordinate2D()
-    var selfCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D() {
-        didSet {
-            prepareSelfCoordinate()
-        }
-    }
+    var selfCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D()
 
-    var updateViewData: ((ViewData) -> ())?
+    var updateViewData: ((ViewData) -> Void)?
 
     // MARK: - property
     let networkService: NetworkServiceProtocol
@@ -65,27 +61,24 @@ final class MainViewModel: MainViewModelProtocol {
         return text
     }
 
-
-    
 //    "\(Int(person.getDistance(from: CLLocation.init(latitude: 1.1, longitude: 2.4)))) m."
-    func updateData(completion:() -> Void) {
-        do {
-//            self.personArray = try networkService.fetchData()
-        } catch {
-            print(error)
-        }
+    func updateData(completion: () -> Void) {
+//        do {
+////            self.personArray = try networkService.fetchData()
+//        } catch {
+//            print(error)
+//        }
     }
 
     func startFetch() {
-
-
         networkService.fetchData { [unowned self] result in
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 switch result {
                 case .success(let locations):
-                    personArray = locations
+                    self.personArray = locations
                     self.updateViewData?(.success(locations))
-                case .failure(let error): break
+                case .failure(let failure):
+                    print(failure)
                     self.updateViewData?(.failure([Person]()))
                 }
             }

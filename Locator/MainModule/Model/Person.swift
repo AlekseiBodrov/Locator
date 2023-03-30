@@ -34,4 +34,3 @@ final class Person: Decodable {
         CLLocation(latitude: latitude!, longitude: longitude!).distance(from: location)
     }
 }
-

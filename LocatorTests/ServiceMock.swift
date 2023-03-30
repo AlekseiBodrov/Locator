@@ -22,4 +22,3 @@ final class ServiceMock: NetworkServiceProtocol {
 //        Person(id: 2, icon: "Baz2", name: "Bar2", latitude: 2.1, longitude: 2.2)
 //    ]
 }
-

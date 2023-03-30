@@ -17,7 +17,10 @@ final class InformationView: UIView {
 
     // MARK: - life cycle funcs
     func instanceFromNib() -> InformationView {
-        guard let view = UINib(nibName: "InformationView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? InformationView else {return InformationView()}
+        guard let view = UINib(nibName: "InformationView",
+                               bundle: nil).instantiate(
+                                withOwner: nil,
+                                  options: nil)[0] as? InformationView else {return InformationView()}
         return view
     }
 
@@ -34,4 +37,3 @@ final class InformationView: UIView {
         icon.rounded(radius: radius)
     }
 }
-
