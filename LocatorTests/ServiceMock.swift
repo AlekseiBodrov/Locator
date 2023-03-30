@@ -10,16 +10,16 @@ import Foundation
 
 final class ServiceMock: NetworkServiceProtocol {
     func fetchData(complition: @escaping (Result<[Locator.Person], Error>) -> Void) {
-        ServiceMock.persons
+//        ServiceMock.persons
     }
 
     func updateLocations(complition: @escaping ([Locator.Person]) -> Void) {
 
     }
 
-    static let persons: [Person] = [
-        Person(id: 1, icon: "Baz1", name: "Bar1", latitude: 1.1, longitude: 1.1),
-        Person(id: 2, icon: "Baz2", name: "Bar2", latitude: 2.1, longitude: 2.2)
-    ]
+//    static let persons: [Person] = [
+//        Person(id: 1, icon: "Baz1", name: "Bar1", latitude: 1.1, longitude: 1.1),
+//        Person(id: 2, icon: "Baz2", name: "Bar2", latitude: 2.1, longitude: 2.2)
+//    ]
 }
 

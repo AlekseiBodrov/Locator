@@ -16,9 +16,9 @@ protocol MainViewModelProtocol {
     var locationManager: CLLocationManager { get }
     var selectedCoordinate: CLLocationCoordinate2D { get set }
     func numberOfRows() -> Int
-    
+    func prepareSelfCoordinate() -> String
     func updateData(completion:() -> Void)
-
+    func getDistanceFor(indexPath: IndexPath) -> String
     func startFetch()
     func error()
 }
@@ -36,7 +36,7 @@ final class MainViewModel: MainViewModelProtocol {
     var selectedCoordinate = CLLocationCoordinate2D()
     var selfCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D() {
         didSet {
-            prepareSelfData()
+            prepareSelfCoordinate()
         }
     }
 
@@ -55,10 +55,16 @@ final class MainViewModel: MainViewModelProtocol {
     }
 
     // MARK: - flow funcs
-    private func prepareSelfData() {
-        let coordinats = "    LAT: \(selfCoordinate.latitude) \nLONG: \(selfCoordinate.longitude)"
-        self.updateSelfCoordinate?(coordinats)
+    func prepareSelfCoordinate() -> String {
+        let text = "    LAT: \(selfCoordinate.latitude) \nLONG: \(selfCoordinate.longitude)"
+        return text
     }
+
+    func prepareSelectedCoordinate() -> String {
+        let text = "    LAT: \(selectedCoordinate.latitude) \nLONG: \(selectedCoordinate.longitude)"
+        return text
+    }
+
 
     
 //    "\(Int(person.getDistance(from: CLLocation.init(latitude: 1.1, longitude: 2.4)))) m."
@@ -71,7 +77,7 @@ final class MainViewModel: MainViewModelProtocol {
     }
 
     func startFetch() {
-        updateViewData?(.loading)
+
 
         networkService.fetchData { [unowned self] result in
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -97,5 +103,16 @@ final class MainViewModel: MainViewModelProtocol {
 
     func numberOfRows() -> Int {
         personArray.count
+    }
+
+    func getDistanceFor(indexPath: IndexPath) -> String {
+        let latitude = selectedCoordinate.latitude
+        let longitude = selectedCoordinate.longitude
+        let location = CLLocation.init(latitude: latitude, longitude: longitude)
+
+        let distance = personArray[indexPath.row].getDistance(from: location)
+
+        let text =  "\(Int(distance)) m."
+        return text
     }
 }

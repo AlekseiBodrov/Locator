@@ -12,10 +12,8 @@ protocol MainViewProtocol: UIView {
     var activityIndicator: UIActivityIndicatorView { get set }
     var tableView: UITableView { get }
     var viewForHeaderInSection: InformationView { get }
-    var selfCoordinate: CLLocationCoordinate2D { get set }
-    var selectedCoordinate: CLLocationCoordinate2D { get set }
     var viewData: ViewData { get set }
-var array: [Person]? { get set }
+    var array: [Person]? { get set }
     var selectedPerson: Int? { get set }
 }
 
@@ -37,11 +35,6 @@ final class MainView: UIView, MainViewProtocol {
     let tableView = MainView.makeTable()
     let viewForHeaderInSection = InformationView().instanceFromNib()
     var activityIndicator: UIActivityIndicatorView = makeActivityIndicatorView()
-
-
-
-    var selfCoordinate = CLLocationCoordinate2D()
-    var selectedCoordinate = CLLocationCoordinate2D()
 
     var array: [Person]?
 
@@ -66,10 +59,6 @@ final class MainView: UIView, MainViewProtocol {
         switch viewData {
         case .initial:
             update(viewData: nil, isHidden: true)
-            activityIndicator.isHidden = false
-            activityIndicator.startAnimating()
-        case .loading:
-//            update(viewData: loading, isHidden: true)
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
         case .success(let success):

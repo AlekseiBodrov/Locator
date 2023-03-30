@@ -44,14 +44,21 @@ extension MainViewController: CLLocationManagerDelegate {
 
 // MARK: - UITableViewDelegate
 extension MainViewController: UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier) as? MainTableViewCell else {
-            return UITableViewCell()
+
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier) as? MainTableViewCell else { return UITableViewCell() }
+
+        let person = mainViewModel?.personArray[indexPath.row]
+
+        if mainView?.selectedPerson == indexPath.row {
+            self.mainViewModel?.selectedCoordinate = CLLocationCoordinate2D(latitude: (mainView?.array![indexPath.row].latitude)!,
+                                                                            longitude: (mainView?.array![indexPath.row].longitude)!)
         }
-        guard let person = mainViewModel?.personArray[indexPath.row] else
-        { return UITableViewCell() }
-        cell.setupWith(image: person.icon!, mainLabel: person.name!, discriptionLabel: "\(Int((mainViewModel?.personArray[indexPath.row].getDistance(from: CLLocation.init(latitude: (mainViewModel?.selectedCoordinate.latitude)!, longitude: (mainViewModel?.selectedCoordinate.longitude)!)))!)) m."
-        )
+
+        cell.setupWith(image: person?.icon,
+                       mainLabel: person?.name,
+                       discriptionLabel: mainViewModel?.getDistanceFor(indexPath: indexPath))
         return cell
     }
 
@@ -61,13 +68,17 @@ extension MainViewController: UITableViewDelegate {
         } else {
             self.mainView?.viewForHeaderInSection.setupWith(image: "redPin",
                                                             mainLabel: "Me",
-                                                            discriptionLabel: "")
+                                                            discriptionLabel: self.mainViewModel?.prepareSelfCoordinate())
             mainView?.selectedPerson = nil
             if let coordinate = mainViewModel?.selfCoordinate {
                 mainViewModel?.selectedCoordinate = coordinate
             }
         }
         return true
+    }
+
+    func setSelectedCoordinate(location: CLLocationCoordinate2D) {
+        self.mainViewModel?.selectedCoordinate = location
     }
 }
 
@@ -84,7 +95,9 @@ extension MainViewController: UITableViewDataSource {
 
             self.mainView?.viewForHeaderInSection.setupWith(image: image!, mainLabel: (person?.name)!, discriptionLabel: "Is Selected")
         } else {
-            //            self.mainView?.viewForHeaderInSection.setupWith(image: "redPin", mainLabel: "Me", discriptionLabel: "\(self.viewModel?.updateSelfCoordinate)")
+            self.mainView?.viewForHeaderInSection.setupWith(image: "redPin",
+                                                            mainLabel: "Me",
+                                                            discriptionLabel: self.mainViewModel?.prepareSelfCoordinate())
         }
         return self.mainView?.viewForHeaderInSection
     }
