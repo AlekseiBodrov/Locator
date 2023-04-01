@@ -18,7 +18,6 @@ protocol MainViewProtocol: UIView {
 }
 
 final class MainView: UIView, MainViewProtocol {
-
     // MARK: - property
     var viewData: ViewData = .initial {
         didSet {
@@ -33,28 +32,19 @@ final class MainView: UIView, MainViewProtocol {
     }
 
     let tableView = MainView.makeTable()
-    let viewForHeaderInSection = InformationView().instanceFromNib()
+    let viewForHeaderInSection = InformationView()
     var activityIndicator: UIActivityIndicatorView = makeActivityIndicatorView()
 
     var array: [Person]?
 
     // MARK: - layoutSubviews
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-//        addSubViews()                  ???????????
-//        setConstraints()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func layoutSubviews() {
         super.layoutSubviews()
         addSubViews()
         setConstraints()
         configurView()
+        viewForHeaderInSection.setConstraints()
 
         switch viewData {
         case .initial:

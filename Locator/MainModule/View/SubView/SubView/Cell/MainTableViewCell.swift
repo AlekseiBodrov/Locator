@@ -18,12 +18,13 @@ final class MainTableViewCell: UITableViewCell {
     static let identifier = "MainTableViewCell"
 
     // MARK: - property
-    private let view = InformationView().instanceFromNib()
+    private let containerView = InformationView()
 
     // MARK: - life cycle funcs
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureView()
+        containerView.configureView()
     }
 
     required init?(coder: NSCoder) {
@@ -32,12 +33,13 @@ final class MainTableViewCell: UITableViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        setConstraint()
+        setConstraints()
+        containerView.setConstraints()
     }
 
     // MARK: - public
     func setupWith(image: String?, mainLabel: String?, discriptionLabel: String?) {
-        self.view.setupWith(image: image, mainLabel: mainLabel, discriptionLabel: discriptionLabel)
+        containerView.setupWith(image: image, mainLabel: mainLabel, discriptionLabel: discriptionLabel)
     }
 }
 
@@ -45,18 +47,18 @@ extension MainTableViewCell {
 
     // MARK: - flow funcs
     private func configureView() {
-        self.contentView.addSubview(view)
-        view.configureWith(mainFontSize: Constant.mainFontSize,
+        contentView.addSubview(containerView)
+        containerView.configureWith(mainFontSize: Constant.mainFontSize,
                            discriptionFontSize: Constant.discriptionFontSize)
-        view.translatesAutoresizingMaskIntoConstraints = false
+        containerView.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    private func setConstraint() {
+    private func setConstraints() {
         NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: contentView.topAnchor),
-            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 }

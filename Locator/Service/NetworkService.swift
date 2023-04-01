@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreLocation
 
 protocol NetworkServiceProtocol {
     func fetchData(complition: @escaping (Result<[Person], Error>) -> Void)

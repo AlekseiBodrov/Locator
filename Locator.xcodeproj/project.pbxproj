@@ -23,7 +23,6 @@
 		5F1D114829D3EC9800B743C3 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1D114729D3EC9800B743C3 /* Person.swift */; };
 		5F1D114A29D3EC9800B743C3 /* locations.json in Resources */ = {isa = PBXBuildFile; fileRef = 5F1D114929D3EC9800B743C3 /* locations.json */; };
 		5F1D114C29D3EC9800B743C3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1D114B29D3EC9800B743C3 /* NetworkService.swift */; };
-		5F1D115229D3EC9800B743C3 /* InformationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F1D115129D3EC9800B743C3 /* InformationView.xib */; };
 		5F1D115429D3EC9800B743C3 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1D115329D3EC9800B743C3 /* InformationView.swift */; };
 		5F498DC529D37DD300A0A0C5 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F498DC429D37DD300A0A0C5 /* UIView+Extension.swift */; };
 		5F498DC729D382AB00A0A0C5 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F498DC629D382AB00A0A0C5 /* UIColor+Extension.swift */; };
@@ -34,6 +33,8 @@
 		5F498DD329D545E800A0A0C5 /* Person + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F498DD229D545E800A0A0C5 /* Person + Extension.swift */; };
 		5F498DD529D5460300A0A0C5 /* ServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F498DD429D5460300A0A0C5 /* ServiceMock.swift */; };
 		5F498DD729D546B900A0A0C5 /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F498DD629D546B900A0A0C5 /* MainViewModelTests.swift */; };
+		5FD36A5429D893E200E97420 /* ViewForHeaderInSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD36A5329D893E200E97420 /* ViewForHeaderInSection.swift */; };
+		5FD36A5729D8A01C00E97420 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD36A5629D8A01C00E97420 /* LocationService.swift */; };
 		6AD887AFBF9645D56AFEB9D1 /* Pods_Locator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99FBA8E12D80359385D8EACD /* Pods_Locator.framework */; };
 		FB0CE179E3B52DDC0E8E8806 /* Pods_Locator_LocatorUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36EE521E83ABCB12FB117AAE /* Pods_Locator_LocatorUITests.framework */; };
 /* End PBXBuildFile section */
@@ -78,7 +79,6 @@
 		5F1D114729D3EC9800B743C3 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		5F1D114929D3EC9800B743C3 /* locations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = locations.json; sourceTree = "<group>"; };
 		5F1D114B29D3EC9800B743C3 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		5F1D115129D3EC9800B743C3 /* InformationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationView.xib; sourceTree = "<group>"; };
 		5F1D115329D3EC9800B743C3 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
 		5F498DC429D37DD300A0A0C5 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		5F498DC629D382AB00A0A0C5 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -89,6 +89,8 @@
 		5F498DD229D545E800A0A0C5 /* Person + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person + Extension.swift"; sourceTree = "<group>"; };
 		5F498DD429D5460300A0A0C5 /* ServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceMock.swift; sourceTree = "<group>"; };
 		5F498DD629D546B900A0A0C5 /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
+		5FD36A5329D893E200E97420 /* ViewForHeaderInSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewForHeaderInSection.swift; sourceTree = "<group>"; };
+		5FD36A5629D8A01C00E97420 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		6559F14C615627E8B5614397 /* Pods-Locator-LocatorUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locator-LocatorUITests.debug.xcconfig"; path = "Target Support Files/Pods-Locator-LocatorUITests/Pods-Locator-LocatorUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8264D3BBACA688763A7758C9 /* Pods-LocatorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocatorTests.release.xcconfig"; path = "Target Support Files/Pods-LocatorTests/Pods-LocatorTests.release.xcconfig"; sourceTree = "<group>"; };
 		8B1A6AB39A9615CB52D8642C /* Pods-Locator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locator.release.xcconfig"; path = "Target Support Files/Pods-Locator/Pods-Locator.release.xcconfig"; sourceTree = "<group>"; };
@@ -248,7 +250,6 @@
 			children = (
 				5F1D113E29D3EC9800B743C3 /* MainView.swift */,
 				5F1D114E29D3EC9800B743C3 /* SubView */,
-				5F1D114429D3EC9800B743C3 /* Cell */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -281,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				5F1D114B29D3EC9800B743C3 /* NetworkService.swift */,
+				5FD36A5629D8A01C00E97420 /* LocationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -288,8 +290,9 @@
 		5F1D114E29D3EC9800B743C3 /* SubView */ = {
 			isa = PBXGroup;
 			children = (
-				5F1D115329D3EC9800B743C3 /* InformationView.swift */,
-				5F1D115129D3EC9800B743C3 /* InformationView.xib */,
+				5FD36A5329D893E200E97420 /* ViewForHeaderInSection.swift */,
+				5F1D114429D3EC9800B743C3 /* Cell */,
+				5FD36A5529D893F300E97420 /* SubView */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -320,6 +323,14 @@
 				5F498DCF29D3846100A0A0C5 /* SF-Pro-Display-Medium.ttf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		5FD36A5529D893F300E97420 /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+				5F1D115329D3EC9800B743C3 /* InformationView.swift */,
+			);
+			path = SubView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -432,7 +443,6 @@
 			files = (
 				5F1D111229D3EC9800B743C3 /* LaunchScreen.storyboard in Resources */,
 				5F498DD029D3846100A0A0C5 /* SF-Pro-Display-Bold.ttf in Resources */,
-				5F1D115229D3EC9800B743C3 /* InformationView.xib in Resources */,
 				5F498DD129D3846100A0A0C5 /* SF-Pro-Display-Medium.ttf in Resources */,
 				5F1D114A29D3EC9800B743C3 /* locations.json in Resources */,
 				5F1D110F29D3EC9800B743C3 /* Assets.xcassets in Resources */,
@@ -550,11 +560,13 @@
 				5F1D110629D3EC9800B743C3 /* AppDelegate.swift in Sources */,
 				5F1D110829D3EC9800B743C3 /* SceneDelegate.swift in Sources */,
 				5F498DC729D382AB00A0A0C5 /* UIColor+Extension.swift in Sources */,
+				5FD36A5429D893E200E97420 /* ViewForHeaderInSection.swift in Sources */,
 				5F1D113929D3EC9800B743C3 /* ModuleBuilder.swift in Sources */,
 				5F1D114629D3EC9800B743C3 /* MainTableViewCell.swift in Sources */,
 				5F1D114C29D3EC9800B743C3 /* NetworkService.swift in Sources */,
 				5F1D115429D3EC9800B743C3 /* InformationView.swift in Sources */,
 				5F1D113F29D3EC9800B743C3 /* MainView.swift in Sources */,
+				5FD36A5729D8A01C00E97420 /* LocationService.swift in Sources */,
 				5F498DCB29D3831600A0A0C5 /* Resources.swift in Sources */,
 				5F1D113C29D3EC9800B743C3 /* MainViewController.swift in Sources */,
 				5F1D114829D3EC9800B743C3 /* Person.swift in Sources */,

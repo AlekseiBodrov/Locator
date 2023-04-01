@@ -11,9 +11,11 @@ import CoreLocation
 protocol MainViewModelProtocol {
     var updateSelfCoordinate: ((String) -> Void)? { get set }
     var updateViewData: ((ViewData) -> Void)? { get set }
+    //  var coordinateCurentUser
+//  func updateCurentUser
+//    tabelViewTrigger
     var personArray: [Person] { get }
     var selfCoordinate: CLLocationCoordinate2D { get set }
-    var locationManager: CLLocationManager { get }
     var selectedCoordinate: CLLocationCoordinate2D { get set }
     func numberOfRows() -> Int
     func prepareSelfCoordinate() -> String
@@ -25,8 +27,8 @@ protocol MainViewModelProtocol {
 
 final class MainViewModel: MainViewModelProtocol {
 
-    let locationManager = CLLocationManager()
-
+    let locationService: LocationServiceProtocol
+    let networkService: NetworkServiceProtocol
 //    var viewData: ViewData = .initial {
 //        didSet {
 //
@@ -39,12 +41,13 @@ final class MainViewModel: MainViewModelProtocol {
     var updateViewData: ((ViewData) -> Void)?
 
     // MARK: - property
-    let networkService: NetworkServiceProtocol
+
     private(set) var personArray: [Person] = .init()
 
     // MARK: - life cycle funcs
-    init(networkService: NetworkServiceProtocol) {
+    init(networkService: NetworkServiceProtocol, locationService: LocationServiceProtocol) {
         self.networkService = networkService
+        self.locationService = locationService
 
         startFetch()
         updateViewData?(.initial)
