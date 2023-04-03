@@ -70,10 +70,11 @@ extension MainViewController: UITableViewDataSource {
         return view
     }
 
+    #warning("Это метод делегата")
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return Constant.heightForHeaderInSection
     }
-
+    #warning("Это метод делегата")
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constant.heightForRow
     }
@@ -88,6 +89,7 @@ extension MainViewController: UITableViewDataSource {
             withIdentifier: MainTableViewCell.identifier) as? MainTableViewCell else { return UITableViewCell() }
 
         let person = self.mainViewModel.getPersonFor(indexPath.row)
+        #warning("Можно ли эту функцию сразу вызывать внутки вью модели и получать модель Person с заполненным distance?")
         let distance = mainViewModel.getDistancePersonFor(indexPath.row)
 
         cell.setupWith(person, discription: distance)

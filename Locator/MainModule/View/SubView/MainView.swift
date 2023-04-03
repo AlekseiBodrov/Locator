@@ -29,6 +29,7 @@ final class MainView: UIView, MainViewProtocol {
     var activityIndicator = UIActivityIndicatorView(style: .large)
 
     // MARK: - life cycle funcs
+    #warning("Создал класс CommonInitView. Наследуйся от него и вызывай конфигурационные функции в методе commonInit()")
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.commonInit()
@@ -41,7 +42,7 @@ final class MainView: UIView, MainViewProtocol {
 
     func commonInit() {
         addSubViews()
-        configurView()
+        configureView()
         setConstraints()
     }
 
@@ -76,7 +77,7 @@ extension MainView {
         addSubview(tableView)
     }
 
-    private func configurView() {
+    private func configureView() {
         backgroundColor = Color.mainColor
         viewForHeaderInSection.backgroundColor = Color.secondaryColor
 
