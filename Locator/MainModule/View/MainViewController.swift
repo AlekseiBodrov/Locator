@@ -44,7 +44,7 @@ final class MainViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        mainViewModel.headerViewDataFetch(index: nil)
+        mainViewModel.headerViewFetchData(index: nil)
     }
 }
 

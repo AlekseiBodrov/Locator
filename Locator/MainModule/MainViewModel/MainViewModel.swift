@@ -15,8 +15,7 @@ protocol MainViewModelProtocol {
     func numberOfRows() -> Int
     func getDistancePersonFor(_ index: Int) -> String
     func startFetchData()
-    func error()
-    func headerViewDataFetch(index: Int?)
+    func headerViewFetchData(index: Int?)
     func getPersonFor(_ index: Int) -> Person
     func setSelectedCoordinateWith(_ index: Int)
     func prepareTextCoordinate(latitude: Double, longitude: Double) -> String
@@ -29,7 +28,7 @@ final class MainViewModel: MainViewModelProtocol {
 
     private var selectedPersonIndex: Int? {
         didSet {
-            headerViewDataFetch(index: selectedPersonIndex)
+            headerViewFetchData(index: selectedPersonIndex)
         }
     }
     var updateSelectedPersonData: ((Person, String) -> Void)?
@@ -89,7 +88,7 @@ final class MainViewModel: MainViewModelProtocol {
        }
     }
 
-    func headerViewDataFetch(index: Int?) {
+    func headerViewFetchData(index: Int?) {
 
         if let index = index {
             updateSelectedPersonData?(personArray[index], "Is Selected")
@@ -138,9 +137,6 @@ final class MainViewModel: MainViewModelProtocol {
                 self.selectedCoordinate = myCoordinate
             }
         }
-    }
-
-    func error() {
     }
 
     func numberOfRows() -> Int {
