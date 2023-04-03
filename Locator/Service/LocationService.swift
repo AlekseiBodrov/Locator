@@ -9,30 +9,21 @@ import Foundation
 import CoreLocation
 
 protocol LocationServiceProtocol {
-    func fetchLocation(complition: @escaping (Result<CLLocationCoordinate2D, Error>) -> Void)
+    var fetchCurrentCoordinate: ((CLLocationCoordinate2D) -> Void)? { get set }
 }
 
 final class LocationService: NSObject, LocationServiceProtocol {
-    // MARK: - property
-    private var location: CLLocationCoordinate2D?
-    var updateCoordinate: ((Result<CLLocationCoordinate2D, Error>) -> Void)?
-    let locationManager = CLLocationManager()
 
+    // MARK: - public
+    var fetchCurrentCoordinate: ((CLLocationCoordinate2D) -> Void)?
+
+    // MARK: - property
+    private let locationManager = CLLocationManager()
+
+    // MARK: - life cycle funcs
     override init() {
         super.init()
-        self.configure()
-    }
-
-    // MARK: - public funcs
-    func fetchLocation(complition: @escaping (Result<CLLocationCoordinate2D, Error>) -> Void) {
-
-    }
-
-    private func configure() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
+        self.configureLocationManager()
     }
 }
 
@@ -42,6 +33,16 @@ extension LocationService: CLLocationManagerDelegate {
         guard let location: CLLocationCoordinate2D = manager.location?.coordinate else {
             return
         }
-        self.location = location
+        fetchCurrentCoordinate?(location)
+    }
+}
+
+extension LocationService {
+    // MARK: - flow funcs
+    private func configureLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
     }
 }

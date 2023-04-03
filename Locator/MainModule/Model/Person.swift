@@ -10,7 +10,6 @@ import Foundation
 
 enum ViewData {
     case initial
-//    case loading
     case success([Person])
     case failure([Person])
 }
@@ -21,6 +20,15 @@ class Person: Decodable {
     var name: String?
     var latitude: Double?
     var longitude: Double?
+
+    init(id: Int? = nil, icon: String? = nil, name: String? = nil,
+         latitude: Double? = nil, longitude: Double? = nil) {
+        self.id = id
+        self.icon = icon
+        self.name = name
+        self.latitude = latitude
+        self.longitude = longitude
+    }
 
     func getDistance(from location: CLLocation) -> CLLocationDistance {
         guard let latitude = self.latitude, let longitude = self.longitude else {

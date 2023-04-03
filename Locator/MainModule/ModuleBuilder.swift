@@ -19,6 +19,7 @@ final class ModuleBuilder: Builder {
         let locationService = LocationService()
         let mainViewModel = MainViewModel(networkService: networkService,
                                           locationService: locationService)
+
         let mainView = MainView()
         let viewController = MainViewController(mainViewModel: mainViewModel,
                                                 mainView: mainView)

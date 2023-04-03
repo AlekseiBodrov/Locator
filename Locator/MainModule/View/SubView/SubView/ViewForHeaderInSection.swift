@@ -13,47 +13,53 @@ final class ViewForHeaderInSection: UIView {
     // MARK: - constant
     private enum Constant {
         static let mainFontSize: CGFloat = .mSize
-        static let discriptionFontSize: CGFloat = .mSize
+        static let discriptionFontSize: CGFloat = .sSize
     }
 
     // MARK: - property
     private let containerView = InformationView()
 
-    // MARK: - life cycle funcs
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.commonInit()
+    }
 
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.commonInit()
+    }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    func commonInit() {
+        addSubViews()
         configureView()
         setConstraints()
-        containerView.setConstraints()
+    }
+
+    // MARK: - life cycle funcs
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setConstraints()
     }
 
     // MARK: - public
-    func setupWith(image: String?, mainLabel: String?, discriptionLabel: String?) {
-        containerView.setupWith(image: image, mainLabel: mainLabel, discriptionLabel: discriptionLabel)
+    func setupWith(_ person: Person, discription: String) {
+        containerView.setupWith(person, discription: discription)
     }
 }
 
 extension ViewForHeaderInSection {
 
     // MARK: - flow funcs
-    func configureView() {
+    func addSubViews() {
         addSubview(containerView)
+    }
+
+    func configureView() {
         containerView.configureWith(mainFontSize: Constant.mainFontSize,
-                           discriptionFontSize: Constant.discriptionFontSize)
-        containerView.translatesAutoresizingMaskIntoConstraints = false
+                                    discriptionFontSize: Constant.discriptionFontSize)
     }
 
     func setConstraints() {
-        NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: topAnchor),
-            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        containerView.viewAnchors(self)
     }
 }
