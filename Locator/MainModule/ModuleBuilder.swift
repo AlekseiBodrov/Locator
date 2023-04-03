@@ -16,12 +16,13 @@ final class ModuleBuilder: Builder {
     // MARK: - static
     static func createMain() -> MainViewController {
         let networkService = NetworkService()
-        let mainViewModel = MainViewModel(networkService: networkService)
-        let mainView = MainView()
-        let viewController = MainViewController()
-        viewController.mainViewModel = mainViewModel
-        viewController.mainView = mainView
+        let locationService = LocationService()
+        let mainViewModel = MainViewModel(networkService: networkService,
+                                          locationService: locationService)
 
+        let mainView = MainView()
+        let viewController = MainViewController(mainViewModel: mainViewModel,
+                                                mainView: mainView)
         return viewController
     }
 }

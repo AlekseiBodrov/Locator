@@ -9,83 +9,115 @@ import Foundation
 import CoreLocation
 
 protocol MainViewModelProtocol {
-    var updateSelfCoordinate: ((String)->())? { get set }
-    var updateViewData: ((ViewData)->())? { get set }
-    var personArray: [Person] { get }
-    var selfCoordinate: CLLocationCoordinate2D { get set }
-    var locationManager: CLLocationManager { get }
-    var selectedCoordinate: CLLocationCoordinate2D { get set }
+    var updateViewData: ((ViewData) -> Void)? { get set }
+    var updateSelectedPersonData: ((Person, String) -> Void)? { get set }
+
     func numberOfRows() -> Int
-    func prepareSelfCoordinate() -> String
-    func updateData(completion:() -> Void)
-    func getDistanceFor(indexPath: IndexPath) -> String
-    func startFetch()
-    func error()
+    func getDistancePersonFor(_ index: Int) -> String
+    func startFetchData()
+    func headerViewFetchData(index: Int?)
+    func getPersonFor(_ index: Int) -> Person
+    func setSelectedCoordinateWith(_ index: Int)
+    func prepareTextCoordinate(latitude: Double, longitude: Double) -> String
 }
 
 final class MainViewModel: MainViewModelProtocol {
+    // MARK: - property
+    private var locationService: LocationServiceProtocol
+    private let networkService: NetworkServiceProtocol
 
-    let locationManager = CLLocationManager()
-
-//    var viewData: ViewData = .initial {
-//        didSet {
-//
-//        }
-//    }
-    var updateSelfCoordinate: ((String) -> ())?
-    var selectedCoordinate = CLLocationCoordinate2D()
-    var selfCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D() {
+    private var selectedPersonIndex: Int? {
         didSet {
-            prepareSelfCoordinate()
+            headerViewFetchData(index: selectedPersonIndex)
+        }
+    }
+    var updateSelectedPersonData: ((Person, String) -> Void)?
+    private var selectedCoordinate: CLLocationCoordinate2D?
+    private var myCoordinate = CLLocationCoordinate2D()
+
+    var updateViewData: ((ViewData) -> Void)?
+
+    private var personArray: [Person] = .init() {
+        didSet {
+            guard let index = selectedPersonIndex else { return }
+            guard let lat = personArray[index].latitude,
+                  let long = personArray[index].longitude else { return }
+            selectedCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
         }
     }
 
-    var updateViewData: ((ViewData) -> ())?
-
-    // MARK: - property
-    let networkService: NetworkServiceProtocol
-    private(set) var personArray: [Person] = .init()
-
     // MARK: - life cycle funcs
-    init(networkService: NetworkServiceProtocol) {
+    init(networkService: NetworkServiceProtocol, locationService: LocationServiceProtocol) {
         self.networkService = networkService
-
-        startFetch()
-        updateViewData?(.initial)
+        self.locationService = locationService
+        startFetchData()
+        startFetchLocation()
     }
 
     // MARK: - flow funcs
-    func prepareSelfCoordinate() -> String {
-        let text = "    LAT: \(selfCoordinate.latitude) \nLONG: \(selfCoordinate.longitude)"
+    func prepareTextCoordinate(latitude: Double, longitude: Double) -> String {
+        let text = "    LAT: \(latitude) \nLONG: \(longitude)"
         return text
     }
 
-    func prepareSelectedCoordinate() -> String {
-        let text = "    LAT: \(selectedCoordinate.latitude) \nLONG: \(selectedCoordinate.longitude)"
-        return text
-    }
-
-
-    
-//    "\(Int(person.getDistance(from: CLLocation.init(latitude: 1.1, longitude: 2.4)))) m."
-    func updateData(completion:() -> Void) {
-        do {
-//            self.personArray = try networkService.fetchData()
-        } catch {
-            print(error)
+    func setSelectedCoordinateWith(_ index: Int) {
+        if selectedPersonIndex == index {
+            selectedPersonIndex = nil
+            selectedCoordinate = myCoordinate
+        } else {
+            guard let latitude = personArray[index].latitude,
+                  let longitude = personArray[index].longitude else { return }
+            selectedCoordinate = CLLocationCoordinate2D.init(latitude: latitude, longitude: longitude)
+            selectedPersonIndex = index
         }
     }
 
-    func startFetch() {
+    func getPersonFor(_ index: Int) -> Person {
+        let person = personArray[index]
+        return person
+    }
 
+    func getDistancePersonFor(_ index: Int) -> String {
+       if let lat = selectedCoordinate?.latitude,
+          let long = selectedCoordinate?.longitude {
+           let distance = personArray[index].getDistance(from: CLLocation(latitude: lat,
+                                                                          longitude: long))
+           return "\(Int(distance)) m."
+       } else {
+           return ""
+       }
+    }
 
+    func headerViewFetchData(index: Int?) {
+
+        if let index = index {
+            updateSelectedPersonData?(personArray[index], "Is Selected")
+        } else {
+            let user = defaultUserData()
+            guard let lat = user.latitude,
+                  let long = user.longitude else { return }
+
+            updateSelectedPersonData?(user, prepareTextCoordinate(latitude: lat,
+                                                                      longitude: long))
+        }
+    }
+
+    func defaultUserData() -> Person {
+        let user = Person(id: nil, icon: "redPin", name: "Me",
+                              latitude: myCoordinate.latitude,
+                              longitude: myCoordinate.longitude)
+        return user
+    }
+
+    func startFetchData() {
         networkService.fetchData { [unowned self] result in
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 switch result {
                 case .success(let locations):
-                    personArray = locations
+                    self.personArray = locations
                     self.updateViewData?(.success(locations))
-                case .failure(let error): break
+                case .failure(let failure):
+                    print(failure)
                     self.updateViewData?(.failure([Person]()))
                 }
             }
@@ -93,26 +125,21 @@ final class MainViewModel: MainViewModelProtocol {
 
         Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
             self.networkService.updateLocations { [unowned self] result in
+                self.personArray = result
                 self.updateViewData?(.success(result))
             }
         }
     }
-
-    func error() {
+    func startFetchLocation() {
+        self.locationService.fetchCurrentCoordinate = { [unowned self] result in
+            self.myCoordinate = result
+            if selectedPersonIndex == nil {
+                self.selectedCoordinate = myCoordinate
+            }
+        }
     }
 
     func numberOfRows() -> Int {
         personArray.count
-    }
-
-    func getDistanceFor(indexPath: IndexPath) -> String {
-        let latitude = selectedCoordinate.latitude
-        let longitude = selectedCoordinate.longitude
-        let location = CLLocation.init(latitude: latitude, longitude: longitude)
-
-        let distance = personArray[indexPath.row].getDistance(from: location)
-
-        let text =  "\(Int(distance)) m."
-        return text
     }
 }

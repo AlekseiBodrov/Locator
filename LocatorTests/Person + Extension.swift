@@ -19,4 +19,3 @@ extension Person: Equatable {
         return true
     }
 }
-

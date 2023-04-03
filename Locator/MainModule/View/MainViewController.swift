@@ -16,69 +16,44 @@ final class MainViewController: UIViewController {
     }
 
     // MARK: - property
-    var mainViewModel: MainViewModelProtocol?
-    var mainView: MainViewProtocol?
+    var mainViewModel: MainViewModelProtocol
+    let mainView: MainViewProtocol
+
+    // MARK: - life cycle funcs
+    init(mainViewModel: MainViewModelProtocol,
+         mainView: MainViewProtocol) {
+        self.mainViewModel = mainViewModel
+        self.mainView = mainView
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - life cycle funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureLocationManager()
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         setConstraints()
     }
-}
 
-// MARK: - CLLocationManagerDelegate
-extension MainViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location: CLLocationCoordinate2D = manager.location?.coordinate else {
-            return
-        }
-        self.mainViewModel?.selfCoordinate = location
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        mainViewModel.headerViewFetchData(index: nil)
     }
 }
 
 // MARK: - UITableViewDelegate
 extension MainViewController: UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier) as? MainTableViewCell else { return UITableViewCell() }
-
-        let person = mainViewModel?.personArray[indexPath.row]
-
-        if mainView?.selectedPerson == indexPath.row {
-            self.mainViewModel?.selectedCoordinate = CLLocationCoordinate2D(latitude: (mainView?.array![indexPath.row].latitude)!,
-                                                                            longitude: (mainView?.array![indexPath.row].longitude)!)
-        }
-
-        cell.setupWith(image: person?.icon,
-                       mainLabel: person?.name,
-                       discriptionLabel: mainViewModel?.getDistanceFor(indexPath: indexPath))
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        if mainView?.selectedPerson != indexPath.row {
-            mainView?.selectedPerson = indexPath.row
-        } else {
-            self.mainView?.viewForHeaderInSection.setupWith(image: "redPin",
-                                                            mainLabel: "Me",
-                                                            discriptionLabel: self.mainViewModel?.prepareSelfCoordinate())
-            mainView?.selectedPerson = nil
-            if let coordinate = mainViewModel?.selfCoordinate {
-                mainViewModel?.selectedCoordinate = coordinate
-            }
-        }
-        return true
-    }
-
-    func setSelectedCoordinate(location: CLLocationCoordinate2D) {
-        self.mainViewModel?.selectedCoordinate = location
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        mainViewModel.setSelectedCoordinateWith(indexPath.row)
     }
 }
 
@@ -86,20 +61,13 @@ extension MainViewController: UITableViewDelegate {
 extension MainViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let selectedPerson = mainView?.selectedPerson {
-            let person = self.mainView?.array![selectedPerson]
-            self.mainViewModel?.selectedCoordinate = CLLocationCoordinate2D(latitude: (person?.latitude)!,
-                                                                            longitude: (person?.longitude)!)
 
-            let image = self.mainView?.array?[selectedPerson].icon
+        let view = mainView.viewForHeaderInSection
 
-            self.mainView?.viewForHeaderInSection.setupWith(image: image!, mainLabel: (person?.name)!, discriptionLabel: "Is Selected")
-        } else {
-            self.mainView?.viewForHeaderInSection.setupWith(image: "redPin",
-                                                            mainLabel: "Me",
-                                                            discriptionLabel: self.mainViewModel?.prepareSelfCoordinate())
+        mainViewModel.updateSelectedPersonData = { person, text in
+            view.setupWith(person, discription: text)
         }
-        return self.mainView?.viewForHeaderInSection
+        return view
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -111,14 +79,25 @@ extension MainViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.mainViewModel?.numberOfRows() ?? 0
+        return self.mainViewModel.numberOfRows()
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: MainTableViewCell.identifier) as? MainTableViewCell else { return UITableViewCell() }
+
+        let person = self.mainViewModel.getPersonFor(indexPath.row)
+        let distance = mainViewModel.getDistancePersonFor(indexPath.row)
+
+        cell.setupWith(person, discription: distance)
+        return cell
     }
 }
 
 extension MainViewController {
     // MARK: - flow funcs
     private func configureView() {
-        guard let mainView = mainView else { return }
         view.addSubview(mainView)
         view.backgroundColor = Color.mainColor
 
@@ -127,16 +106,10 @@ extension MainViewController {
         mainView.tableView.register(MainTableViewCell.self,
                                     forCellReuseIdentifier: MainTableViewCell.identifier)
 
-        fetchDataForHeaderInSection()
         updateView()
-
-        //        mainViewModel?.startFetch()
-        //        mainViewModel?.error()
-        //        mainViewModel?.updateData {}
     }
 
     private func setConstraints() {
-        guard let mainView = mainView else { return }
         mainView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
@@ -147,56 +120,9 @@ extension MainViewController {
         ])
     }
 
-    private func configureViewForHeaderInSection(person: Person?) {
-        if let person = person {
-            mainView?.viewForHeaderInSection.setupWith(image: person.icon, mainLabel: person.name, discriptionLabel: "")
-        } else {
-            mainView?.viewForHeaderInSection.setupWith(image: "redPin", mainLabel: "Me", discriptionLabel: "")
-        }
-
-    }
-
-    private func configureLocationManager() {
-        guard let viewModel = self.mainViewModel else { return }
-        viewModel.locationManager.delegate = self
-        viewModel.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        viewModel.locationManager.requestAlwaysAuthorization()
-        viewModel.locationManager.startUpdatingLocation()
-    }
-
-    private func fetchDataForHeaderInSection() {
-        self.mainViewModel?.updateSelfCoordinate = { [weak self] result in
-            DispatchQueue.main.async { [unowned self] in
-                self?.mainView?.viewForHeaderInSection.discriptionLabel.text = result
-
-                if let selectedPerson = self!.mainView?.selectedPerson {
-                    let person = self?.mainView?.array![selectedPerson]
-                    self!.mainViewModel?.selectedCoordinate = CLLocationCoordinate2D(latitude: (person?.latitude)!,
-                                                                                     longitude: (person?.longitude)!)
-
-                    let image = self?.mainView?.array?[selectedPerson].icon
-
-                    self?.mainView?.viewForHeaderInSection.setupWith(image: image!, mainLabel: (person?.name)!, discriptionLabel: "Is Selected")
-                } else {
-                    self?.mainView?.viewForHeaderInSection.setupWith(image: "redPin", mainLabel: "Me", discriptionLabel: result)
-                }
-            }
-        }
-    }
-
     private func updateView() {
-        mainViewModel?.updateViewData = { [weak self] viewData in
-            self?.mainView?.viewData = viewData
+        mainViewModel.updateViewData = { [unowned self] viewData in
+            self.mainView.viewData = viewData
         }
-    }
-
-    private func presentAlert() {
-        let title = Resources.Alert.title
-        let message = Resources.Alert.message
-        let cancelTitle = Resources.Alert.cancel
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel)
-        alertController.addAction(cancelAction)
-        present(alertController, animated: true)
     }
 }

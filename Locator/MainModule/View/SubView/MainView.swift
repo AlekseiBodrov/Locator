@@ -9,12 +9,10 @@ import UIKit
 import CoreLocation
 
 protocol MainViewProtocol: UIView {
-    var activityIndicator: UIActivityIndicatorView { get set }
+    var activityIndicator: UIActivityIndicatorView { get }
     var tableView: UITableView { get }
-    var viewForHeaderInSection: InformationView { get }
+    var viewForHeaderInSection: ViewForHeaderInSection { get set }
     var viewData: ViewData { get set }
-    var array: [Person]? { get set }
-    var selectedPerson: Int? { get set }
 }
 
 final class MainView: UIView, MainViewProtocol {
@@ -26,35 +24,30 @@ final class MainView: UIView, MainViewProtocol {
         }
     }
 
-    var selectedPerson: Int? = nil {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    var tableView = UITableView()
+    var viewForHeaderInSection = ViewForHeaderInSection()
+    var activityIndicator = UIActivityIndicatorView(style: .large)
 
-    let tableView = MainView.makeTable()
-    let viewForHeaderInSection = InformationView().instanceFromNib()
-    var activityIndicator: UIActivityIndicatorView = makeActivityIndicatorView()
-
-    var array: [Person]?
-
-    // MARK: - layoutSubviews
-
+    // MARK: - life cycle funcs
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        addSubViews()                  ???????????
-//        setConstraints()
+        self.commonInit()
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.commonInit()
     }
 
+    func commonInit() {
+        addSubViews()
+        configurView()
+        setConstraints()
+    }
+
+    // MARK: - layoutSubviews
     override func layoutSubviews() {
         super.layoutSubviews()
-        addSubViews()
-        setConstraints()
-        configurView()
 
         switch viewData {
         case .initial:
@@ -70,52 +63,39 @@ final class MainView: UIView, MainViewProtocol {
             activityIndicator.isHidden = true
             activityIndicator.stopAnimating()
         }
-    }
 
-    private func update(viewData: [Person]?, isHidden: Bool) {
-        array = viewData
-        tableView.isHidden = isHidden
-        viewForHeaderInSection.isHidden = isHidden
         tableView.reloadData()
     }
-
-    
 }
 
 extension MainView {
     // MARK: - flow funcs
     private func addSubViews() {
-        backgroundColor = Color.mainColor
+        addSubview(viewForHeaderInSection)
         addSubview(activityIndicator)
         addSubview(tableView)
-        addSubview(viewForHeaderInSection)
     }
 
     private func configurView() {
+        backgroundColor = Color.mainColor
         viewForHeaderInSection.backgroundColor = Color.secondaryColor
-    }
 
-    private static func makeTable() -> UITableView {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }
-
-    private static func makeActivityIndicatorView() -> UIActivityIndicatorView {
-        let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.color = Color.secondaryColor
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        return activityIndicator
     }
-    
-    private func setConstraints() {
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
+    private func update(viewData: [Person]?, isHidden: Bool) {
+        tableView.isHidden = isHidden
+        viewForHeaderInSection.isHidden = isHidden
+        tableView.reloadData()
+    }
+
+    private func setConstraints() {
+        tableView.viewAnchors(self)
+
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
             activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor),
             activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
