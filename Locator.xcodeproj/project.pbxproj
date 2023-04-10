@@ -340,8 +340,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5F1D112C29D3EC9800B743C3 /* Build configuration list for PBXNativeTarget "Locator" */;
 			buildPhases = (
-				5F498DDF29D5B7D400A0A0C5 /* ShellScript */,
 				F81B3CC575D99CEF439ADBED /* [CP] Check Pods Manifest.lock */,
+				5F498DDF29D5B7D400A0A0C5 /* ShellScript */,
 				5F1D10FE29D3EC9800B743C3 /* Sources */,
 				5F1D10FF29D3EC9800B743C3 /* Frameworks */,
 				5F1D110029D3EC9800B743C3 /* Resources */,

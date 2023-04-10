@@ -6,7 +6,7 @@ target 'Locator' do
   use_frameworks!
 
   # Pods for Locator
-  pod 'SwiftLint'
+  pod 'SwiftLint', '0.50.3'
   target 'LocatorTests' do
     inherit! :search_paths
     # Pods for testing
