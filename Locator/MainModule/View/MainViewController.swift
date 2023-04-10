@@ -121,8 +121,8 @@ extension MainViewController {
     }
 
     private func updateView() {
-        mainViewModel.updateViewData = { [unowned self] viewData in
-            self.mainView.viewData = viewData
+        mainViewModel.updateViewData = { [weak self] viewData in
+            self?.mainView.viewData = viewData
         }
     }
 }

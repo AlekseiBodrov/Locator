@@ -110,32 +110,30 @@ final class MainViewModel: MainViewModelProtocol {
     }
 
     func startFetchData() {
-        networkService.fetchData { [unowned self] result in
+        networkService.fetchData { [weak self] result in
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 switch result {
                 case .success(let locations):
-                    self.personArray = locations
-                    self.updateViewData?(.success(locations))
+                    self?.personArray = locations
+                    self?.updateViewData?(.success(locations))
                 case .failure(let failure):
                     print(failure)
-                    self.updateViewData?(.failure([Person]()))
+                    self?.updateViewData?(.failure([Person]()))
                 }
             }
         }
 
         Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
-            self.networkService.updateLocations { [unowned self] result in
-                self.personArray = result
-                self.updateViewData?(.success(result))
+            self.networkService.updateLocations { [weak self] result in
+                self?.personArray = result
+                self?.updateViewData?(.success(result))
             }
         }
     }
     func startFetchLocation() {
-        self.locationService.fetchCurrentCoordinate = { [unowned self] result in
-            self.myCoordinate = result
-            if selectedPersonIndex == nil {
-                self.selectedCoordinate = myCoordinate
-            }
+        self.locationService.fetchCurrentCoordinate = { [weak self] result in
+            self?.myCoordinate = result
+            self?.selectedCoordinate = result
         }
     }
 
