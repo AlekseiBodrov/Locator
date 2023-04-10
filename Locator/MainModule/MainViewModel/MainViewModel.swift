@@ -39,8 +39,8 @@ final class MainViewModel: MainViewModelProtocol {
 
     private var personArray: [Person] = .init() {
         didSet {
-            guard let index = selectedPersonIndex else { return }
-            guard let lat = personArray[index].latitude,
+            guard let index = selectedPersonIndex,
+                  let lat = personArray[index].latitude,
                   let long = personArray[index].longitude else { return }
             selectedCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
         }
@@ -56,8 +56,7 @@ final class MainViewModel: MainViewModelProtocol {
 
     // MARK: - flow funcs
     func prepareTextCoordinate(latitude: Double, longitude: Double) -> String {
-        let text = "    LAT: \(latitude) \nLONG: \(longitude)"
-        return text
+        return "    LAT: \(latitude) \nLONG: \(longitude)"
     }
 
     func setSelectedCoordinateWith(_ index: Int) {
@@ -73,8 +72,7 @@ final class MainViewModel: MainViewModelProtocol {
     }
 
     func getPersonFor(_ index: Int) -> Person {
-        let person = personArray[index]
-        return person
+        return personArray[index]
     }
 
     func getDistancePersonFor(_ index: Int) -> String {
@@ -103,9 +101,11 @@ final class MainViewModel: MainViewModelProtocol {
     }
 
     func defaultUserData() -> Person {
-        let user = Person(id: nil, icon: "redPin", name: "Me",
-                              latitude: myCoordinate.latitude,
-                              longitude: myCoordinate.longitude)
+        let user = Person(id: nil,
+                          icon: "redPin",
+                          name: "Me",
+                          latitude: myCoordinate.latitude,
+                          longitude: myCoordinate.longitude)
         return user
     }
 
@@ -133,7 +133,7 @@ final class MainViewModel: MainViewModelProtocol {
     func startFetchLocation() {
         self.locationService.fetchCurrentCoordinate = { [weak self] result in
             self?.myCoordinate = result
-            self?.selectedCoordinate = result
+            self?.selectedCoordinate = self?.selectedCoordinate ?? result
         }
     }
 

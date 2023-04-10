@@ -51,6 +51,14 @@ final class MainViewController: UIViewController {
 // MARK: - UITableViewDelegate
 extension MainViewController: UITableViewDelegate {
 
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return Constant.heightForHeaderInSection
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return Constant.heightForRow
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         mainViewModel.setSelectedCoordinateWith(indexPath.row)
@@ -68,14 +76,6 @@ extension MainViewController: UITableViewDataSource {
             view.setupWith(person, discription: text)
         }
         return view
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return Constant.heightForHeaderInSection
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Constant.heightForRow
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

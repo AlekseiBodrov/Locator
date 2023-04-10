@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-final class InformationView: UIView {
+final class InformationView: CommonInitView {
     // MARK: - constant
     private enum Constant {
         static let padding: CGFloat = .sSize
@@ -19,18 +19,7 @@ final class InformationView: UIView {
     private let mainLabel = UILabel()
     private let discriptionLabel = UILabel()
 
-    // MARK: - life cycle funcs
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.commonInit()
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        self.commonInit()
-    }
-
-    // MARK: - public
+   // MARK: - public
     func setupWith(_ person: Person, discription: String) {
         self.icon.image = person.icon != nil ?
         UIImage(named: person.icon!) : UIImage(systemName: "questionmark.circle")
@@ -50,7 +39,7 @@ final class InformationView: UIView {
     }
 
     // MARK: - flow funcs
-    private func commonInit() {
+    override func commonInit() {
          addSubviews()
          setConstraints()
      }

@@ -9,7 +9,7 @@ import Foundation
 
 import UIKit
 
-final class ViewForHeaderInSection: UIView {
+final class ViewForHeaderInSection: CommonInitView {
     // MARK: - constant
     private enum Constant {
         static let mainFontSize: CGFloat = .mSize
@@ -18,22 +18,6 @@ final class ViewForHeaderInSection: UIView {
 
     // MARK: - property
     private let containerView = InformationView()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.commonInit()
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        self.commonInit()
-    }
-
-    func commonInit() {
-        addSubViews()
-        configureView()
-        setConstraints()
-    }
 
     // MARK: - life cycle funcs
     override func layoutSubviews() {
@@ -45,11 +29,18 @@ final class ViewForHeaderInSection: UIView {
     func setupWith(_ person: Person, discription: String) {
         containerView.setupWith(person, discription: discription)
     }
+
+    override func commonInit() {
+        addSubViews()
+        configureView()
+        setConstraints()
+    }
 }
 
 extension ViewForHeaderInSection {
 
     // MARK: - flow funcs
+
     func addSubViews() {
         addSubview(containerView)
     }

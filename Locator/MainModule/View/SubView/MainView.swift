@@ -8,14 +8,14 @@
 import UIKit
 import CoreLocation
 
-protocol MainViewProtocol: UIView {
+protocol MainViewProtocol: CommonInitView {
     var activityIndicator: UIActivityIndicatorView { get }
     var tableView: UITableView { get }
     var viewForHeaderInSection: ViewForHeaderInSection { get set }
     var viewData: ViewData { get set }
 }
 
-final class MainView: UIView, MainViewProtocol {
+final class MainView: CommonInitView, MainViewProtocol {
 
     // MARK: - property
     var viewData: ViewData = .initial {
@@ -28,18 +28,8 @@ final class MainView: UIView, MainViewProtocol {
     var viewForHeaderInSection = ViewForHeaderInSection()
     var activityIndicator = UIActivityIndicatorView(style: .large)
 
-    // MARK: - life cycle funcs
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.commonInit()
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        self.commonInit()
-    }
-
-    func commonInit() {
+    // MARK: - commonInit
+    override func commonInit() {
         addSubViews()
         configurView()
         setConstraints()
